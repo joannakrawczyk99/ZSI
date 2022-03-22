@@ -1,4 +1,10 @@
+f = open("test.txt", "r")
 
-if __name__ == '__main__':
-    f = open("test.txt", "r")
-    print(f.read())
+
+lines = f.readlines()
+for line in lines:
+    for c in line:
+        if c.isdigit() == True:
+            print(format(c))
+
+f.close()
