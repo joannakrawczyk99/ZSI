@@ -1,10 +1,17 @@
-import numpy as np
+from typing import List
 
-class Matrix:
-  def __init__(self, file):
-    self.file = file
+def saveToList():
+  f = open("test.txt", "r")
+  list_of_int = []
+  lines = f.readlines()
+  for line in lines:
+    for c in line:
+      if c.isdigit():
+        list_of_int.append(format(c))
+  f.close()
+  return list_of_int
 
-  def createMatrix(self):
+
 
 
 
