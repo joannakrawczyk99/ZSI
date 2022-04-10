@@ -8,35 +8,29 @@ from crossover import partially_matched_crossover
 from file import read_from_file
 from matrix import create_distances_matrix
 from mutation import swap_mutation
+from route import create_route
 from selection import roulette_wheel_selection
 
 population = []  # list that holds paths
-population_size = 10  # max 120 combinations
-
-mutate_prob = 0.1
-n_generations = 4
+population_size = 20  # max 120 combinations
+mutate_prob = 0.2
+n_generations = 5
 routes_length = [0] * population_size
 fitness = [0] * population_size
 best_path = 1000
-
-data = read_from_file('test.txt')
-
+data = read_from_file('a280.txt')
 distances = create_distances_matrix(data)
-print(distances)
-
-cities = create_cities(data)
-print(cities)
 
 
-# calculates distance between 2 cities
 def calc_distance(city1, city2):
     return distances[city1][city2]  # ord('A')=65
 
 
-# creates a random route
-def create_route():
-    shuffled = random.sample(cities, len(cities))
-    return shuffled
+cities = create_cities(data)
+#print(cities)
+
+
+
 
 
 # calculates length of an route
@@ -53,7 +47,7 @@ def calc_route_length():
 # creates starting population
 def create_population():
     for i in range(population_size):
-        population.append(create_route())
+        population.append(create_route(cities))
 
 
 # find fittest path called every generation
@@ -99,11 +93,10 @@ for j in range(n_generations):
     calc_route_length()
 
     # find best path overall
-    if routes_length[find_fittest()] < best_path:
-        index = find_fittest()
-        best_path = routes_length[index]
+    index = find_fittest()
+    best_path = routes_length[index]
 
-# wyświetl dane wyjściowe
+# wyświetlanie danych wyjściowych
 
 pi = population[index]
 
