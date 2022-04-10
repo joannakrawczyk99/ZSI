@@ -5,18 +5,12 @@ from crossover import crossover
 from file import read_data
 from matrix import create_matrix
 from mutation import mutation
+from parameters import distances, data, population_size, path_holder, routes_length, fitness, n_generations, mutate_prob
 from route import create_route
 from selection import selection
 
-population = []  # list that holds paths
-population_size = 20  # max 120 combinations
-mutate_prob = 0.2
-n_generations = 5
-routes_length = [0] * population_size
-fitness = [0] * population_size
-best_path = 1000
-data = read_data('a280.txt')
-distances = create_matrix(data)
+
+
 
 
 def calc_distance(city1, city2):
@@ -30,14 +24,14 @@ def calc_route_length():
     for i in range(population_size):
         route_l = 0
         for j in range(1, len(cities)):
-            route_l = route_l + calc_distance(population[i][j - 1], population[i][j])
+            route_l = route_l + calc_distance(path_holder[i][j - 1], path_holder[i][j])
         routes_length[i] = route_l
         fitness[i] = 1 / routes_length[i]
 
 
 def create_population():
     for i in range(population_size):
-        population.append(create_route(cities))
+        path_holder.append(create_route(cities))
 
 
 def find_fittest():
@@ -62,13 +56,13 @@ for j in range(n_generations):
                 parent2 = selection(population_size, fitness)
             else:
                 break
-        population[i], population[i + 1] = crossover(population[parent1], population[parent2], cities)
+        path_holder[i], path_holder[i + 1] = crossover(path_holder[parent1], path_holder[parent2], cities)
         calc_route_length()
 
     for i in range(population_size):
         rand = random.uniform(0, 1)
         if rand < mutate_prob:
-            mutation(i, cities, population)
+            mutation(i, cities, path_holder)
 
     calc_route_length()
 
@@ -76,7 +70,7 @@ for j in range(n_generations):
     best_path = routes_length[index]
 
 
-pi = population[index]
+pi = path_holder[index]
 
 for i in range(len(pi)):
     if i + 1 == len(pi):
