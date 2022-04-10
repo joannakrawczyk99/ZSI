@@ -1,4 +1,3 @@
-# creates a random route
 import random
 
 

@@ -1,6 +1,3 @@
-from typing import List
-
-
 def create_cities(distances):
     size = int(distances[0][0])
     #print(size)

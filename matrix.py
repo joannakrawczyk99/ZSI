@@ -1,6 +1,3 @@
-from typing import List
-
-
 def create_matrix(data):
     size = int(data[0][0])
     matrix = [[None] * size for _ in range(size)]
