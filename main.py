@@ -4,12 +4,12 @@ from typing import List
 import random
 
 from cities import create_cities
-from crossover import partially_matched_crossover
-from file import read_from_file
-from matrix import create_distances_matrix
-from mutation import swap_mutation
+from crossover import crossover
+from file import read_data
+from matrix import create_matrix
+from mutation import mutation
 from route import create_route
-from selection import roulette_wheel_selection
+from selection import selection
 
 population = []  # list that holds paths
 population_size = 20  # max 120 combinations
@@ -18,8 +18,8 @@ n_generations = 5
 routes_length = [0] * population_size
 fitness = [0] * population_size
 best_path = 1000
-data = read_from_file('a280.txt')
-distances = create_distances_matrix(data)
+data = read_data('a280.txt')
+distances = create_matrix(data)
 
 
 def calc_distance(city1, city2):
@@ -28,9 +28,6 @@ def calc_distance(city1, city2):
 
 cities = create_cities(data)
 #print(cities)
-
-
-
 
 
 # calculates length of an route
@@ -70,16 +67,16 @@ calc_route_length()
 for j in range(n_generations):
     for i in range(0, population_size, 2):
         # pick parents for crossover
-        parent1 = roulette_wheel_selection(population_size, fitness)
-        parent2 = roulette_wheel_selection(population_size, fitness)
+        parent1 = selection(population_size, fitness)
+        parent2 = selection(population_size, fitness)
         # always pick different parents (not necessary)
         while True:
             if parent1 == parent2:
-                parent2 = roulette_wheel_selection(population_size, fitness)
+                parent2 = selection(population_size, fitness)
             else:
                 break
         # update population
-        population[i], population[i + 1] = partially_matched_crossover(population[parent1], population[parent2], cities)
+        population[i], population[i + 1] = crossover(population[parent1], population[parent2], cities)
         # calculate lengths for updated generation
         calc_route_length()
 
@@ -87,7 +84,7 @@ for j in range(n_generations):
     for i in range(population_size):
         rand = random.uniform(0, 1)
         if rand < mutate_prob:
-            swap_mutation(i, cities, population)
+            mutation(i, cities, population)
 
     # calculate lengths after mutation
     calc_route_length()

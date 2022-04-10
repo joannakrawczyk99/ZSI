@@ -1,7 +1,7 @@
 from typing import List
 
 
-def create_distances_matrix(data: List[List[int]]):
+def create_matrix(data):
     size = int(data[0][0])
     matrix = [[None] * size for _ in range(size)]
     for x in range(size):

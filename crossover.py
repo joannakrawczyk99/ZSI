@@ -2,7 +2,7 @@
 import random
 
 
-def partially_matched_crossover(ind1, ind2, cities):
+def crossover(ind1, ind2, cities):
     size = len(cities)
     p1, p2 = [0] * size, [0] * size
 

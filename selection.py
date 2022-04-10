@@ -2,7 +2,7 @@
 import random
 
 
-def roulette_wheel_selection(population_size, fitness):
+def selection(population_size, fitness):
     s = 0
     partial_s = 0
     ind = 0
