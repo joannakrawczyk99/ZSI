@@ -1,6 +1,3 @@
-import csv
-from typing import List
-
 import random
 
 from cities import create_cities
@@ -23,31 +20,26 @@ distances = create_matrix(data)
 
 
 def calc_distance(city1, city2):
-    return distances[city1][city2]  # ord('A')=65
+    return distances[city1][city2]
 
 
 cities = create_cities(data)
-#print(cities)
 
 
-# calculates length of an route
 def calc_route_length():
     for i in range(population_size):
         route_l = 0
         for j in range(1, len(cities)):
             route_l = route_l + calc_distance(population[i][j - 1], population[i][j])
-        # route_l = route_l + calc_distance(population[i][len(cities)-1], population[i][1]) calculate distance from last to first
         routes_length[i] = route_l
         fitness[i] = 1 / routes_length[i]
 
 
-# creates starting population
 def create_population():
     for i in range(population_size):
         population.append(create_route(cities))
 
 
-# find fittest path called every generation
 def find_fittest():
     key = 1000
     fittest = 0
@@ -58,42 +50,31 @@ def find_fittest():
     return fittest
 
 
-# initialize algorithm
 create_population()
-# print("Population initialization:", "\n", population)
 calc_route_length()
-# print("Population's paths length:", "\n", routes_length)
 
 for j in range(n_generations):
     for i in range(0, population_size, 2):
-        # pick parents for crossover
         parent1 = selection(population_size, fitness)
         parent2 = selection(population_size, fitness)
-        # always pick different parents (not necessary)
         while True:
             if parent1 == parent2:
                 parent2 = selection(population_size, fitness)
             else:
                 break
-        # update population
         population[i], population[i + 1] = crossover(population[parent1], population[parent2], cities)
-        # calculate lengths for updated generation
         calc_route_length()
 
-    # pick the paths for mutation based on a probability
     for i in range(population_size):
         rand = random.uniform(0, 1)
         if rand < mutate_prob:
             mutation(i, cities, population)
 
-    # calculate lengths after mutation
     calc_route_length()
 
-    # find best path overall
     index = find_fittest()
     best_path = routes_length[index]
 
-# wyświetlanie danych wyjściowych
 
 pi = population[index]
 
