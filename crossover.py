@@ -1,8 +1,8 @@
-# PMX crossover
 import random
+from typing import List
 
 
-def crossover(ind1, ind2, cities):
+def crossover(ind1: int, ind2: int, cities: List[List[int]]) -> int:
     size = len(cities)
     p1, p2 = [0] * size, [0] * size
 

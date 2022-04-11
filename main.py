@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 from cities import create_cities
 from crossover import crossover
@@ -14,7 +15,7 @@ data = read_data('test2.txt')
 distances = create_matrix(data)
 
 
-def calc_distance(city1, city2):
+def calc_distance(city1: List[List[int]], city2: List[List[int]]) -> List[List[int]]:
     return distances[city1][city2]
 
 
@@ -35,7 +36,7 @@ def create_population():
         path_holder.append(create_route(cities))
 
 
-def find_fittest():
+def find_fittest() -> int:
     key = 1000
     fittest = 0
     for i in range(population_size):

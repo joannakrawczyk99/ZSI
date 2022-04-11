@@ -1,7 +1,7 @@
 import random
 
 
-def selection(population_size, fitness):
+def selection(population_size: int, fitness: float) -> int:
     s = 0
     partial_s = 0
     ind = 0
@@ -12,6 +12,6 @@ def selection(population_size, fitness):
         if partial_s < rand:
             partial_s = partial_s + fitness[m]
             ind = ind + 1
-    if ind == population_size:  
+    if ind == population_size:
         ind = population_size - 1
     return ind
