@@ -2,11 +2,15 @@ import random
 
 from cities import create_cities
 from crossover import crossover
+from file import read_data
+from matrix import create_matrix
 from mutation import mutation
-from parameters import distances, data, population_size, path_holder, routes_length, fitness, n_generations, mutate_prob
+from parameters import population_size, path_holder, routes_length, fitness, n_generations, mutate_prob
 from route import create_route
 from selection import selection
 
+data = read_data('berlin52.txt')
+distances = create_matrix(data)
 
 def calc_distance(city1, city2):
     return distances[city1][city2]
